@@ -174,12 +174,34 @@
             text-align: justify;
             text-justify: inter-word;
             text-indent: 2em;
-            margin-bottom: 1em;
+            margin-bottom: 1.5em;
             width: 100%;
             hyphens: auto;
             -webkit-hyphens: auto;
             -ms-hyphens: auto;
-            line-height: 1.5;
+            line-height: 1.6;
+        }
+
+        /* Handle line breaks */
+        .chapitre .chapter-content br {
+            display: block;
+            content: "";
+            
+        }
+
+        /* Handle multiple line breaks */
+        .chapitre .chapter-content br + br {
+            margin-top: .1mm;
+        }
+
+        .chapitre .chapter-content br + br + br{
+            margin-top: .1mm;
+        }
+
+
+        /* Preserve whitespace */
+        .chapitre .chapter-content {
+            white-space: pre-line;
         }
     </style>
 </head>
@@ -243,7 +265,7 @@
     <section id="chapter-{{ chapter.id }}" class="chapitre">
         <h2 id="chapter-{{ chapter.id }}-h2">{{ chapter.title }}</h2>
         <div class="chapter-content">
-            {{ chapter.content|safe }}
+            {{ chapter.content|safe|linebreaks }}
         </div>
     </section>
     {% endfor %}
