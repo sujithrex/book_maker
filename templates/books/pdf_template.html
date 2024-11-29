@@ -3,7 +3,7 @@
 <html lang="fr">
 <head>
     <meta charset="utf-8">
-    <meta name="author" content="{{ project.author }}">
+    <meta name="author" content="{{ project.author_name }}">
     <title>{{ project.title }}</title>
     <style>
         @page {
@@ -187,14 +187,14 @@
             <div class="subtitle">{{ project.subtitle }}</div>
             {% endif %}
         </div>
-        <div class="author">{{ project.author }}</div>
+        <div class="author">{{ project.author_name }}</div>
     </section>
 
     <!-- Copyright Page -->
     <section class="copyright-page">
         <div class="copyright-section">
             <div class="section-title">Copyright Information</div>
-            Copyright © {% if project.year %}{{ project.year }}{% else %}{% now "Y" %}{% endif %} by {{ project.author }}
+            Copyright © {% if project.year %}{{ project.year }}{% else %}{% now "Y" %}{% endif %} by {{ project.author_name }}
             <br>All rights reserved.
         </div>
 
@@ -211,11 +211,11 @@
         </div>
         {% endif %}
 
-        {% if project.publisher or project.publisher_address %}
+        {% if project.publisher_name or project.publisher_address %}
         <div class="publisher-section">
             <div class="section-title">Publisher Information</div>
-            {% if project.publisher %}{{ project.publisher }}<br>{% endif %}
-            {% if project.publisher_address %}{{ project.publisher_address }}<br>{% endif %}
+            {% if project.publisher_name %}{{ project.publisher_name }}<br>{% endif %}
+            {% if project.publisher_address %}{{ project.publisher_address }}{% endif %}
         </div>
         {% endif %}
 
