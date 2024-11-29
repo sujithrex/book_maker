@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    {% if chapter %}Edit Chapter{% else %}New Chapter{% endif %} - {{ project.title }}
+{% endblock %}
+
+{% block extra_css %}
+<link href="{% static 'ckeditor/ckeditor.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="mb-0">
+                        {% if chapter %}
+                            Edit Chapter: {{ chapter.title }}
+                        {% else %}
+                            New Chapter
+                        {% endif %}
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-8">
+                                <label for="title" class="form-label">Chapter Title</label>
+                                <input type="text" class="form-control" id="title" name="title" 
+                                       value="{{ chapter.title|default:'' }}" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="order" class="form-label">Chapter Order</label>
+                                <input type="number" class="form-control" id="order" name="order" 
+                                       value="{{ chapter.order|default:1 }}" min="1" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="content" class="form-label">Content</label>
+                            <textarea id="content" name="content" class="form-control">{{ chapter.content|default:'' }}</textarea>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="{% url 'project_detail' project.pk %}" class="btn btn-outline-secondary">
+                                <i class="fas fa-times"></i> Cancel
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Save Chapter
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'ckeditor/ckeditor.js' %}"></script>
+<script>
+    CKEDITOR.replace('content', {
+        height: '500px',
+        removePlugins: 'elementspath,resize',
+        toolbarGroups: [
+            { name: 'document', groups: [ 'mode', 'document', 'doctools' ] },
+            { name: 'clipboard', groups: [ 'clipboard', 'undo' ] },
+            { name: 'editing', groups: [ 'find', 'selection', 'spellchecker', 'editing' ] },
+            { name: 'forms', groups: [ 'forms' ] },
+            '/',
+            { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
+            { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi', 'paragraph' ] },
+            { name: 'links', groups: [ 'links' ] },
+            { name: 'insert', groups: [ 'insert' ] },
+            '/',
+            { name: 'styles', groups: [ 'styles' ] },
+            { name: 'colors', groups: [ 'colors' ] },
+            { name: 'tools', groups: [ 'tools' ] },
+            { name: 'others', groups: [ 'others' ] },
+            { name: 'about', groups: [ 'about' ] }
+        ]
+    });
+</script>
+{% endblock %} 

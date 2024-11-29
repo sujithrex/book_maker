@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}Welcome to Book Maker{% endblock %}
+
+{% block content %}
+<div class="px-4 py-5 my-5 text-center">
+    <h1 class="display-5 fw-bold text-body-emphasis">Welcome to Book Maker</h1>
+    <div class="col-lg-6 mx-auto">
+        <p class="lead mb-4">
+            Create, manage, and publish your books with our powerful book writing platform.
+            From novels to textbooks, we've got you covered with professional tools and features.
+        </p>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+            {% if user.is_authenticated %}
+                <a href="{% url 'dashboard' %}" class="btn btn-primary btn-lg px-4 gap-3">Go to Dashboard</a>
+                <a href="{% url 'project_create' %}" class="btn btn-outline-secondary btn-lg px-4">Create New Project</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn btn-primary btn-lg px-4 gap-3">Login</a>
+                <a href="{% url 'login' %}" class="btn btn-outline-secondary btn-lg px-4">Sign Up</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="container px-4 py-5">
+    <h2 class="pb-2 border-bottom">Features</h2>
+    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+        <div class="col d-flex align-items-start">
+            <div class="icon-square text-body-emphasis bg-body-secondary d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
+                <i class="fas fa-book"></i>
+            </div>
+            <div>
+                <h3 class="fs-2">Project Management</h3>
+                <p>Create and manage multiple book projects. Organize chapters, track versions, and keep everything in one place.</p>
+            </div>
+        </div>
+        <div class="col d-flex align-items-start">
+            <div class="icon-square text-body-emphasis bg-body-secondary d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
+                <i class="fas fa-edit"></i>
+            </div>
+            <div>
+                <h3 class="fs-2">Rich Text Editor</h3>
+                <p>Write and format your content with our powerful editor. Support for images, tables, and more.</p>
+            </div>
+        </div>
+        <div class="col d-flex align-items-start">
+            <div class="icon-square text-body-emphasis bg-body-secondary d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
+                <i class="fas fa-file-export"></i>
+            </div>
+            <div>
+                <h3 class="fs-2">Export Options</h3>
+                <p>Export your book in multiple formats including PDF, ePub, and more. Ready for publishing or printing.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

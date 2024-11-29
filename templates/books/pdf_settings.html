@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+
+{% block title %}PDF Export Settings - {{ project.title }}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="mb-0">PDF Export Settings</h2>
+            </div>
+            <div class="card-body">
+                <form method="post" action="{% url 'export_pdf' project.pk %}">
+                    {% csrf_token %}
+                    
+                    <!-- Page Size and Margins -->
+                    <div class="mb-4">
+                        <h5 class="border-bottom pb-2">Page Size and Margins</h5>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="page_size" class="form-label">Page Size</label>
+                                <select class="form-select" id="page_size" name="page_size">
+                                    <option value="110x170">Book (110 × 170 mm)</option>
+                                    <option value="A4">A4 (210 × 297 mm)</option>
+                                    <option value="A5">A5 (148 × 210 mm)</option>
+                                    <option value="8x5">Book (8 × 5 inches)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="orientation" class="form-label">Orientation</label>
+                                <select class="form-select" id="orientation" name="orientation">
+                                    <option value="portrait">Portrait</option>
+                                    <option value="landscape">Landscape</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="margin_top" class="form-label">Top Margin (mm)</label>
+                                <input type="number" class="form-control" id="margin_top" name="margin_top" value="20">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="margin_right" class="form-label">Right Margin (mm)</label>
+                                <input type="number" class="form-control" id="margin_right" name="margin_right" value="15">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="margin_bottom" class="form-label">Bottom Margin (mm)</label>
+                                <input type="number" class="form-control" id="margin_bottom" name="margin_bottom" value="12">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="margin_left" class="form-label">Left Margin (mm)</label>
+                                <input type="number" class="form-control" id="margin_left" name="margin_left" value="10">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Font Settings -->
+                    <div class="mb-4">
+                        <h5 class="border-bottom pb-2">Font Settings</h5>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="font_family" class="form-label">Font Family</label>
+                                <select class="form-select" id="font_family" name="font_family">
+                                    <option value="SourceSerifPro">Source Serif Pro</option>
+                                    <option value="TimesNewRoman">Times New Roman</option>
+                                    <option value="Georgia">Georgia</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="font_size" class="form-label">Base Font Size (pt)</label>
+                                <input type="number" class="form-control" id="font_size" name="font_size" value="10">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Headers and Footers -->
+                    <div class="mb-4">
+                        <h5 class="border-bottom pb-2">Headers and Footers</h5>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="page_numbering" class="form-label">Page Numbering</label>
+                                <select class="form-select" id="page_numbering" name="page_numbering">
+                                    <option value="top-corners">Top Corners</option>
+                                    <option value="bottom-corners">Bottom Corners</option>
+                                    <option value="none">None</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="running_header" class="form-label">Running Header</label>
+                                <select class="form-select" id="running_header" name="running_header">
+                                    <option value="chapter-title">Chapter Title</option>
+                                    <option value="book-title">Book Title</option>
+                                    <option value="none">None</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chapter Settings -->
+                    <div class="mb-4">
+                        <h5 class="border-bottom pb-2">Chapter Settings</h5>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="chapter_start" class="form-label">Chapter Start</label>
+                                <select class="form-select" id="chapter_start" name="chapter_start">
+                                    <option value="right">Right Page</option>
+                                    <option value="any">Any Page</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="chapter_title_size" class="form-label">Chapter Title Size (em)</label>
+                                <input type="number" class="form-control" id="chapter_title_size" name="chapter_title_size" value="2.6" step="0.1">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Additional Features -->
+                    <div class="mb-4">
+                        <h5 class="border-bottom pb-2">Additional Features</h5>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="hyphenation" name="hyphenation" checked>
+                            <label class="form-check-label" for="hyphenation">
+                                Enable Text Hyphenation
+                            </label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="justify_text" name="justify_text" checked>
+                            <label class="form-check-label" for="justify_text">
+                                Justify Text
+                            </label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="embed_fonts" name="embed_fonts" checked>
+                            <label class="form-check-label" for="embed_fonts">
+                                Embed Fonts
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-file-pdf"></i> Generate PDF
+                        </button>
+                        <a href="{% url 'project_detail' project.pk %}" class="btn btn-outline-secondary">
+                            <i class="fas fa-times"></i> Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

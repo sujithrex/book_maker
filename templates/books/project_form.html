@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}{% if project %}Edit{% else %}Create New{% endif %} Project - Book Maker{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="mb-0">{% if project %}Edit Project{% else %}Create New Project{% endif %}</h2>
+            </div>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    <!-- Basic Information -->
+                    <h5 class="border-bottom pb-2 mb-4">Basic Information</h5>
+                    {{ form.title|as_crispy_field }}
+                    {{ form.subtitle|as_crispy_field }}
+                    {{ form.author_name|as_crispy_field }}
+                    {{ form.book_type|as_crispy_field }}
+                    {{ form.description|as_crispy_field }}
+                    {{ form.cover_image|as_crispy_field }}
+
+                    <!-- Publishing Information -->
+                    <h5 class="border-bottom pb-2 mb-4 mt-5">Publishing Information</h5>
+                    {{ form.isbn|as_crispy_field }}
+                    {{ form.publisher_name|as_crispy_field }}
+                    {{ form.publisher_location|as_crispy_field }}
+                    {{ form.publisher_website|as_crispy_field }}
+                    {{ form.publisher_address|as_crispy_field }}
+
+                    <!-- Copyright Information -->
+                    <h5 class="border-bottom pb-2 mb-4 mt-5">Copyright Information</h5>
+                    {{ form.copyright_text|as_crispy_field }}
+                    {{ form.rights_text|as_crispy_field }}
+                    {{ form.lccn|as_crispy_field }}
+                    {{ form.edition|as_crispy_field }}
+
+                    <!-- Additional Information -->
+                    <h5 class="border-bottom pb-2 mb-4 mt-5">Additional Information</h5>
+                    {{ form.printing_info|as_crispy_field }}
+                    {{ form.cover_designer|as_crispy_field }}
+                    {{ form.illustrator|as_crispy_field }}
+                    {{ form.version_number|as_crispy_field }}
+                    {{ form.publication_date|as_crispy_field }}
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> {% if project %}Save Changes{% else %}Create Project{% endif %}
+                        </button>
+                        <a href="{% if project %}{% url 'project_detail' project.pk %}{% else %}{% url 'dashboard' %}{% endif %}" class="btn btn-outline-secondary">
+                            <i class="fas fa-times"></i> Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
